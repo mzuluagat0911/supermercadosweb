@@ -1,26 +1,125 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fafaf8;
+  --foreground: #1a1f16;
+  --ahorro: #e31b23;
+  --ahorro-dark: #b8141b;
+  --ahorro-light: #fde8e9;
+  --ahorro-green: #00a651;
+  --centro: #1a9f42;
+  --centro-dark: #0f7a32;
+  --centro-light: #e8f7ed;
+  --centro-orange: #f15a24;
+  --accent: #f15a24;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --card: #ffffff;
+  --shadow: 0 10px 32px -14px rgba(0, 0, 0, 0.2);
+  --footer-bg: #1b1310;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ahorro: var(--ahorro);
+  --color-ahorro-dark: var(--ahorro-dark);
+  --color-ahorro-light: var(--ahorro-light);
+  --color-ahorro-green: var(--ahorro-green);
+  --color-centro: var(--centro);
+  --color-centro-dark: var(--centro-dark);
+  --color-centro-light: var(--centro-light);
+  --color-centro-orange: var(--centro-orange);
+  --color-accent: var(--accent);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-card: var(--card);
+  --color-footer-bg: var(--footer-bg);
+  --font-sans: var(--font-dm-sans);
+  --font-display: var(--font-playfair);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+.font-display {
+  font-family: var(--font-playfair), Georgia, serif;
+}
+
+.section-container {
+  @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+}
+
+.card-shadow {
+  box-shadow: var(--shadow);
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--centro-orange);
+  outline-offset: 2px;
+}
+
+.hero-gradient-1 {
+  background: linear-gradient(135deg, #b8141b 0%, #e31b23 45%, #ff4d55 100%);
+}
+
+.hero-gradient-2 {
+  background: linear-gradient(135deg, #0f7a32 0%, #1a9f42 45%, #2dbf62 100%);
+}
+
+.hero-gradient-3 {
+  background: linear-gradient(135deg, #c2410c 0%, #f15a24 45%, #fb923c 100%);
+}
+
+.leaflet-container {
+  z-index: 0;
+  font-family: inherit;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.6s ease-out both;
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in {
+  animation: slide-in 0.5s ease-out both;
 }

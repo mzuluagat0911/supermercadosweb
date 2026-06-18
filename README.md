@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Supermercados El Ahorro & Del Centro
 
-## Getting Started
+Sitio web corporativo para **Supermercados El Ahorro** (4 sedes) y **Supermercados del Centro** (1 sede), con contenido administrable desde base de datos y base preparada para un dashboard interno.
 
-First, run the development server:
+## Stack
+
+- **Next.js 16** (App Router)
+- **Tailwind CSS 4**
+- **Prisma 7** + **SQLite**
+- **Leaflet** (mapa interactivo)
+
+## Páginas
+
+| Ruta | Descripción |
+|------|-------------|
+| `/` | Home con slider de banners, domicilios y tiendas |
+| `/donde-estamos` | Mapa interactivo y listado de sedes |
+| `/quienes-somos` | Visión, misión e imagen actual |
+| `/rrhh` | Formulario de postulación laboral |
+
+## Base de datos
+
+Modelos preparados para el dashboard futuro:
+
+- `Banner` — sliders y campañas (Quincenazo, Trasnochón, Separata, Mundial, Aniversario, etc.)
+- `Store` — sedes con dirección, teléfono, WhatsApp y coordenadas
+- `AboutContent` — texto de Quiénes somos
+- `SiteSettings` — email y redes sociales
+- `HrArea` / `HrApplication` — áreas y postulaciones RRHH
+- `AdminUser` — usuarios administradores (para el dashboard)
+
+## Comandos
 
 ```bash
+# Instalar dependencias
+npm install
+
+# Configurar base de datos (migración + datos iniciales)
+npm run db:setup
+
+# Desarrollo
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Producción
+npm run build
+npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## API (base para dashboard)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `GET /api/banners`
+- `GET /api/stores`
+- `GET /api/about`
+- `GET /api/settings`
+- `POST /api/hr` — envío de formulario RRHH
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Personalización
 
-## Learn More
+Los datos de sedes, banners, textos y redes sociales se editan en la base de datos. Por ahora usa `prisma/seed.ts` o Prisma Studio:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npx prisma studio
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Reemplaza las imágenes en `public/images/` con fotos reales de tiendas y campañas.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Próximo paso: Dashboard
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+La estructura ya está lista para construir un panel en `/admin` con autenticación sobre el modelo `AdminUser`, CRUD de banners, sedes y contenido.
