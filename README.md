@@ -66,4 +66,26 @@ Reemplaza las imágenes en `public/images/` con fotos reales de tiendas y campa�
 
 ## Próximo paso: Dashboard
 
-La estructura ya está lista para construir un panel en `/admin` con autenticación sobre el modelo `AdminUser`, CRUD de banners, sedes y contenido.
+Panel de administración disponible en `/admin`:
+
+| Sección | Ruta | Qué hace |
+|---------|------|----------|
+| Login | `/admin/login` | Acceso con usuario admin |
+| Banners | `/admin/banners` | CRUD del slider + subida de imágenes |
+| Franja promos | `/admin/ticker` | Textos del banner que se mueve |
+| RRHH | `/admin/rrhh` | Ver postulaciones y descargar hojas de vida |
+
+Credenciales iniciales (tras `npm run db:seed`):
+
+- Email: `admin@supermercados.com`
+- Contraseña: `admin123` (cambiar en producción)
+
+Variables en `.env`:
+
+```bash
+SESSION_SECRET=un-secreto-largo-y-aleatorio
+ADMIN_EMAIL=admin@supermercados.com
+ADMIN_PASSWORD=admin123
+```
+
+Pendiente para el dashboard: sedes, Quiénes somos, configuración y historias de redes.

@@ -1,6 +1,7 @@
 import "dotenv/config";
 import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
 import { PrismaClient } from "../src/generated/prisma/client";
+import { hashPassword } from "../src/lib/password";
 
 const adapter = new PrismaBetterSqlite3({
   url: process.env.DATABASE_URL ?? "file:./prisma/dev.db",
@@ -9,10 +10,12 @@ const prisma = new PrismaClient({ adapter });
 
 async function main() {
   await prisma.banner.deleteMany();
+  await prisma.promoTickerItem.deleteMany();
   await prisma.store.deleteMany();
   await prisma.hrArea.deleteMany();
   await prisma.aboutContent.deleteMany();
   await prisma.siteSettings.deleteMany();
+  await prisma.adminUser.deleteMany();
 
   await prisma.banner.createMany({
     data: [
@@ -153,7 +156,57 @@ async function main() {
     ],
   });
 
+  await prisma.promoTickerItem.createMany({
+    data: [
+      {
+        emoji: "🛒",
+        text: "¡Llegó el Quincenazo! Los mejores precios para tu hogar",
+        href: "/donde-estamos",
+        sortOrder: 1,
+      },
+      {
+        emoji: "🌙",
+        text: "Trasnochón: descuentos exclusivos para cerrar el mes",
+        href: "/donde-estamos",
+        sortOrder: 2,
+      },
+      {
+        emoji: "📋",
+        text: "Separata de fin de mes — calidad y frescura garantizada",
+        href: "/donde-estamos",
+        sortOrder: 3,
+      },
+      {
+        emoji: "🚚",
+        text: "Pedí por WhatsApp y recibí en tu casa. Aplican TyC.",
+        href: "/donde-estamos",
+        sortOrder: 4,
+      },
+      {
+        emoji: "🍎",
+        text: "Frutas y verduras frescas todos los días",
+        sortOrder: 5,
+      },
+      {
+        emoji: "🏪",
+        text: "5 sedes en Villamaría para estar cerca de ti",
+        href: "/donde-estamos",
+        sortOrder: 6,
+      },
+    ],
+  });
+
+  const adminPassword = process.env.ADMIN_PASSWORD ?? "admin123";
+  await prisma.adminUser.create({
+    data: {
+      email: process.env.ADMIN_EMAIL ?? "admin@supermercados.com",
+      name: "Administrador",
+      passwordHash: await hashPassword(adminPassword),
+    },
+  });
+
   console.log("Base de datos inicializada correctamente.");
+  console.log(`Admin: ${process.env.ADMIN_EMAIL ?? "admin@supermercados.com"} / ${adminPassword}`);
 }
 
 main()

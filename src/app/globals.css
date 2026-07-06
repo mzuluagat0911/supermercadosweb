@@ -123,3 +123,26 @@ button:focus-visible {
 .animate-slide-in {
   animation: slide-in 0.5s ease-out both;
 }
+
+@keyframes promo-ticker-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.promo-ticker-track {
+  animation: promo-ticker-scroll 32s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .promo-ticker-track {
+    animation: none;
+  }
+
+  .promo-ticker-track > div:last-child {
+    display: none;
+  }
+}
