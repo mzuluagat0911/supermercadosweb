@@ -1,11 +1,12 @@
 import { HeroSlider } from "@/components/home/HeroSlider";
+import { SeparataSection } from "@/components/home/SeparataSection";
 import { DomiciliosSection } from "@/components/home/DomiciliosSection";
 import { StoresPreview } from "@/components/home/StoresPreview";
 import { PromoTicker } from "@/components/layout/PromoTicker";
 import { prisma } from "@/lib/prisma";
 
 export default async function HomePage() {
-  const [banners, stores, tickerItems] = await Promise.all([
+  const [banners, stores, tickerItems, separataItems] = await Promise.all([
     prisma.banner.findMany({
       where: { active: true },
       orderBy: { sortOrder: "asc" },
@@ -18,12 +19,17 @@ export default async function HomePage() {
       where: { active: true },
       orderBy: { sortOrder: "asc" },
     }),
+    prisma.separataItem.findMany({
+      where: { active: true },
+      orderBy: { sortOrder: "asc" },
+    }),
   ]);
 
   return (
     <>
       <HeroSlider banners={banners} />
       <PromoTicker items={tickerItems} />
+      <SeparataSection items={separataItems} />
       <DomiciliosSection />
       <StoresPreview stores={stores} />
     </>

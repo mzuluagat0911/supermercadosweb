@@ -13,12 +13,14 @@ import {
   Users,
   ExternalLink,
   Sparkles,
+  Newspaper,
 } from "lucide-react";
 import { BrandLogos } from "@/components/brand/BrandLogos";
 
 const NAV = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { href: "/admin/banners", label: "Banners", icon: ImageIcon },
+  { href: "/admin/separata", label: "Separata", icon: Newspaper },
   { href: "/admin/ticker", label: "Franja promos", icon: Megaphone },
   { href: "/admin/rrhh", label: "RRHH", icon: Users },
 ];

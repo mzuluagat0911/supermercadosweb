@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1a2a4a"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+  <rect width="1080" height="1080" fill="url(#bg)"/>
+  <rect x="0" y="720" width="1080" height="360" fill="#f5b301"/>
+  <text x="80" y="380" fill="#ffffff" font-family="Georgia, serif" font-size="64" font-weight="700">Cervezas</text>
+  <text x="80" y="520" fill="#ffe566" font-family="Arial Black, Arial, sans-serif" font-size="150" font-weight="900">30%</text>
+  <text x="80" y="600" fill="#ffffff" font-family="Arial, sans-serif" font-size="34" opacity="0.9">en marcas seleccionadas</text>
+  <text x="80" y="880" fill="#0f172a" font-family="Arial, sans-serif" font-size="32" font-weight="700">Aplican T&amp;C</text>
+</svg>

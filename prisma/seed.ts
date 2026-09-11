@@ -11,6 +11,7 @@ const prisma = new PrismaClient({ adapter });
 async function main() {
   await prisma.banner.deleteMany();
   await prisma.promoTickerItem.deleteMany();
+  await prisma.separataItem.deleteMany();
   await prisma.store.deleteMany();
   await prisma.hrArea.deleteMany();
   await prisma.aboutContent.deleteMany();
@@ -48,6 +49,35 @@ async function main() {
         ctaLink: "https://wa.me/573001234567",
         ctaType: "CATALOG",
         sortOrder: 3,
+      },
+    ],
+  });
+
+  await prisma.separataItem.createMany({
+    data: [
+      {
+        title: "Vinos seleccionados",
+        link: "/donde-estamos",
+        imageUrl: "/images/separata/vinos.svg",
+        sortOrder: 1,
+      },
+      {
+        title: "Cervezas",
+        link: "/donde-estamos",
+        imageUrl: "/images/separata/cervezas.svg",
+        sortOrder: 2,
+      },
+      {
+        title: "Delicatessen",
+        link: "/donde-estamos",
+        imageUrl: "/images/separata/delicatessen.svg",
+        sortOrder: 3,
+      },
+      {
+        title: "Mercado del mes",
+        link: "/donde-estamos",
+        imageUrl: "/images/separata/mercado.svg",
+        sortOrder: 4,
       },
     ],
   });
@@ -127,9 +157,9 @@ async function main() {
     data: {
       id: "default",
       vision:
-        "Ser la cadena de supermercados de referencia en la región, reconocida por ofrecer productos frescos, precios justos y una experiencia de compra cercana y confiable para cada familia.",
+        "En el 2027 posicionarnos como una empresa sólida, logrando la satisfacción de las necesidades de nuestros clientes externos e internos apoyados en las nuevas tecnologías.",
       mission:
-        "Acercar a nuestros clientes una propuesta de valor basada en calidad, variedad y ahorro real, con un equipo comprometido y sedes pensadas para facilitar el día a día del hogar.",
+        "Somos una empresa de tradición manizaleña líder en servicio, calidad, variedad y precios justos donde el centro de nuestro trabajo está en la satisfacción y bienestar de nuestro cliente interno y externo.",
       description:
         "Supermercados El Ahorro y Supermercados del Centro comparten una misma visión de servicio: estar cerca de la comunidad con campañas pensadas para el bolsillo del hogar, surtido actualizado y atención personalizada. Hoy proyectamos una marca renovada, dinámica y orientada al cliente, lista para acompañarte en cada compra.",
       imageUrl: "/images/about/empresa.svg",

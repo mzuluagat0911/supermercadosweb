@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b0a4a"/>
+      <stop offset="55%" stop-color="#6b1d7a"/>
+      <stop offset="100%" stop-color="#c45c26"/>
+    </linearGradient>
+  </defs>
+  <rect width="1080" height="1080" fill="url(#bg)"/>
+  <circle cx="860" cy="180" r="160" fill="#ffffff" opacity="0.06"/>
+  <circle cx="160" cy="900" r="220" fill="#ffffff" opacity="0.05"/>
+  <text x="80" y="420" fill="#ffffff" font-family="Georgia, serif" font-size="72" font-weight="700">Vinos</text>
+  <text x="80" y="520" fill="#ffe566" font-family="Arial Black, Arial, sans-serif" font-size="140" font-weight="900">20%</text>
+  <text x="80" y="600" fill="#ffffff" font-family="Arial, sans-serif" font-size="36" opacity="0.9">en seleccionados</text>
+  <rect x="80" y="680" width="280" height="64" rx="32" fill="#e31b23"/>
+  <text x="220" y="722" fill="#ffffff" font-family="Arial, sans-serif" font-size="28" font-weight="700" text-anchor="middle">¡Llévalo!</text>
+</svg>

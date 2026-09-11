@@ -4,6 +4,7 @@ import {
   Bot,
   ImageIcon,
   Megaphone,
+  Newspaper,
   Package,
   ShoppingCart,
   Sparkles,
@@ -13,6 +14,7 @@ import {
 type AdminDashboardProps = {
   stats: {
     activeBanners: number;
+    activeSeparataItems: number;
     activeTickerItems: number;
     pendingApplications: number;
     totalApplications: number;
@@ -26,6 +28,13 @@ const MODULES = [
     description: "Sube imágenes y gestiona las campañas del slider de la home.",
     icon: ImageIcon,
     accent: "bg-ahorro-light text-ahorro",
+  },
+  {
+    href: "/admin/separata",
+    title: "Separata de ofertas",
+    description: "Publica las imágenes 1080×1080 con descuentos de la temporada.",
+    icon: Newspaper,
+    accent: "bg-[#fff4e5] text-[#c45c26]",
   },
   {
     href: "/admin/ticker",
@@ -91,9 +100,9 @@ export function AdminDashboard({ stats }: AdminDashboardProps) {
 
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
             <StatCard label="Banners activos" value={stats.activeBanners} />
+            <StatCard label="Separata activa" value={stats.activeSeparataItems} />
             <StatCard label="Promos activas" value={stats.activeTickerItems} />
             <StatCard label="RRHH pendientes" value={stats.pendingApplications} />
-            <StatCard label="Postulaciones" value={stats.totalApplications} />
           </div>
         </div>
       </section>
@@ -106,7 +115,7 @@ export function AdminDashboard({ stats }: AdminDashboardProps) {
           </div>
         </div>
 
-        <div className="grid gap-4 lg:grid-cols-3">
+        <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-4">
           {MODULES.map(({ href, title, description, icon: Icon, accent }) => (
             <Link
               key={href}

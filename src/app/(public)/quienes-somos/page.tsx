@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Target, Eye, Sparkles } from "lucide-react";
+import { Target, Eye, Sparkles, Check, HeartHandshake } from "lucide-react";
 import { BrandLogos } from "@/components/brand/BrandLogos";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { prisma } from "@/lib/prisma";
@@ -7,6 +7,14 @@ import { prisma } from "@/lib/prisma";
 export const metadata = {
   title: "Quiénes somos",
 };
+
+const VALUES = [
+  "Integridad",
+  "Servicio",
+  "Respeto",
+  "Pasión",
+  "Compromiso",
+] as const;
 
 export default async function QuienesSomosPage() {
   const about = await prisma.aboutContent.findUnique({ where: { id: "default" } });
@@ -34,28 +42,7 @@ export default async function QuienesSomosPage() {
       </section>
 
       <section className="py-20">
-        <div className="section-container grid items-center gap-12 lg:grid-cols-2">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-3xl bg-gradient-to-br from-ahorro-light to-white">
-            {about.imageUrl && (
-              <Image
-                src={about.imageUrl}
-                alt="Nuestra empresa"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-            )}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-            <div className="absolute bottom-6 left-6 right-6 rounded-2xl bg-white/90 p-5 backdrop-blur-sm">
-              <div className="flex items-center gap-3">
-                <Sparkles className="h-6 w-6 text-ahorro" />
-                <p className="text-sm font-medium">
-                  Una propuesta renovada, cercana y pensada para el presente de tu familia.
-                </p>
-              </div>
-            </div>
-          </div>
-
+        <div className="section-container grid items-start gap-10 lg:grid-cols-2">
           <div className="space-y-6">
             <div className="card-shadow rounded-2xl border border-border bg-card p-8">
               <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-ahorro-light text-ahorro">
@@ -73,8 +60,50 @@ export default async function QuienesSomosPage() {
               <p className="mt-3 leading-relaxed text-muted">{about.mission}</p>
             </div>
           </div>
+
+          <div className="card-shadow rounded-2xl border border-border bg-card p-8">
+            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-centro-light text-centro">
+              <HeartHandshake className="h-6 w-6" />
+            </div>
+            <h2 className="font-display text-2xl font-semibold">Valores</h2>
+            <ul className="mt-6 space-y-4">
+              {VALUES.map((value) => (
+                <li key={value} className="flex items-start gap-3">
+                  <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-centro text-white">
+                    <Check className="h-3.5 w-3.5" strokeWidth={3} />
+                  </span>
+                  <p className="font-semibold text-foreground">{value}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </section>
+
+      {about.imageUrl && (
+        <section className="border-t border-border bg-white py-16">
+          <div className="section-container">
+            <div className="relative aspect-[21/9] overflow-hidden rounded-3xl bg-gradient-to-br from-ahorro-light to-white sm:aspect-[3/1]">
+              <Image
+                src={about.imageUrl}
+                alt="Nuestra empresa"
+                fill
+                className="object-cover"
+                sizes="100vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/35 to-transparent" />
+              <div className="absolute bottom-6 left-6 right-6 max-w-xl rounded-2xl bg-white/90 p-5 backdrop-blur-sm">
+                <div className="flex items-center gap-3">
+                  <Sparkles className="h-6 w-6 shrink-0 text-ahorro" />
+                  <p className="text-sm font-medium">
+                    Una propuesta renovada, cercana y pensada para el presente de tu familia.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="bg-gradient-to-r from-ahorro via-[#8b1a42] to-centro py-16 text-white">
         <div className="section-container text-center">

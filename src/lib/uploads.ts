@@ -4,7 +4,10 @@ import path from "path";
 const IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/svg+xml"];
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
 
-export async function saveUploadedImage(file: File, folder: "banners" | "stores") {
+export async function saveUploadedImage(
+  file: File,
+  folder: "banners" | "stores" | "separata",
+) {
   if (file.size > MAX_IMAGE_SIZE) {
     throw new Error("La imagen no puede superar 5 MB.");
   }

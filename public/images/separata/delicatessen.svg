@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7c2d12"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+  </defs>
+  <rect width="1080" height="1080" fill="url(#bg)"/>
+  <circle cx="900" cy="200" r="180" fill="#fbbf24" opacity="0.15"/>
+  <text x="80" y="400" fill="#ffffff" font-family="Georgia, serif" font-size="58" font-weight="700">Delicatessen</text>
+  <text x="80" y="540" fill="#fef3c7" font-family="Arial Black, Arial, sans-serif" font-size="140" font-weight="900">40%</text>
+  <text x="80" y="620" fill="#ffffff" font-family="Arial, sans-serif" font-size="34" opacity="0.92">en embutidos y quesos</text>
+  <rect x="80" y="720" width="300" height="64" rx="12" fill="#ffffff"/>
+  <text x="230" y="762" fill="#7c2d12" font-family="Arial, sans-serif" font-size="26" font-weight="800" text-anchor="middle">LO QUIERO</text>
+</svg>
