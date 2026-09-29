@@ -128,7 +128,7 @@ function Card({
           fill
           priority={priority}
           sizes={featured ? "(max-width: 1024px) 100vw, 50vw" : "(max-width: 640px) 80vw, 25vw"}
-          className="object-cover transition duration-700 group-hover:scale-[1.035]"
+          className="object-contain bg-[#071433] transition duration-700 group-hover:scale-[1.02]"
         />
         <div className="absolute inset-0 flex items-end justify-center bg-gradient-to-t from-black/45 via-transparent to-transparent opacity-0 transition duration-300 group-hover:opacity-100">
           <span className="mb-5 inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-foreground shadow-lg">

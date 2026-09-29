@@ -33,9 +33,23 @@ export function HeroSlider({ banners }: HeroSliderProps) {
 
   const banner = banners[current];
   const gradient = GRADIENTS[current % GRADIENTS.length];
+  const isArtwork = /\.(png|jpe?g|webp)$/i.test(banner.imageUrl);
 
   return (
     <section className="relative overflow-hidden">
+      {isArtwork ? (
+        <div key={banner.id} className="relative bg-[#071433]">
+          <Image
+            src={banner.imageUrl}
+            alt={banner.title}
+            width={1024}
+            height={320}
+            priority
+            sizes="100vw"
+            className="h-auto w-full"
+          />
+        </div>
+      ) : (
       <div className={`relative min-h-[520px] ${gradient}`}>
         <div className="absolute inset-0 opacity-20">
           <Image
@@ -94,6 +108,8 @@ export function HeroSlider({ banners }: HeroSliderProps) {
             </div>
           </div>
         </div>
+      </div>
+      )}
 
         {banners.length > 1 && (
           <>
@@ -129,7 +145,6 @@ export function HeroSlider({ banners }: HeroSliderProps) {
             </div>
           </>
         )}
-      </div>
     </section>
   );
 }

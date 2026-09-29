@@ -21,6 +21,16 @@ async function main() {
   await prisma.banner.createMany({
     data: [
       {
+        tag: "Trasnochón",
+        title: "El ahorro sale de noche",
+        body: "Gran Trasnochón. Miércoles 30 de septiembre, desde las 4:00 p.m. hasta el cierre del supermercado.",
+        imageUrl: "/images/banners/trasnochon-30-septiembre.png",
+        ctaText: "Ver sucursales",
+        ctaLink: "/donde-estamos",
+        ctaType: "STORES",
+        sortOrder: 0,
+      },
+      {
         tag: "Quincenazo",
         title: "¡Llegó el Quincenazo! Los mejores precios para tu hogar.",
         body: "Aprovechá ofertas imperdibles del 15 al 18 de este mes.",
@@ -29,6 +39,7 @@ async function main() {
         ctaLink: "/donde-estamos",
         ctaType: "OFFERS",
         sortOrder: 1,
+        active: false,
       },
       {
         tag: "Trasnochón",
@@ -39,6 +50,7 @@ async function main() {
         ctaLink: "/donde-estamos",
         ctaType: "STORES",
         sortOrder: 2,
+        active: false,
       },
       {
         tag: "Separata",
@@ -49,6 +61,7 @@ async function main() {
         ctaLink: "https://wa.me/573001234567",
         ctaType: "CATALOG",
         sortOrder: 3,
+        active: false,
       },
     ],
   });
@@ -56,7 +69,32 @@ async function main() {
   await prisma.separataItem.createMany({
     data: [
       {
+        title: "Gran Trasnochón",
+        link: "/donde-estamos",
+        imageUrl: "/images/separata/trasnochon-30-septiembre.jpg",
+        sortOrder: 0,
+      },
+      {
+        title: "Gran Trasnochón",
+        link: "/donde-estamos",
+        imageUrl: "/images/separata/trasnochon-cuadrado.png",
+        sortOrder: 1,
+      },
+      {
+        title: "Tu mercado a mitad de precio",
+        link: "/donde-estamos",
+        imageUrl: "/images/separata/trasnochon-mitad-de-precio.png",
+        sortOrder: 2,
+      },
+      {
+        title: "Trasnoche y ahorra",
+        link: "/donde-estamos",
+        imageUrl: "/images/separata/trasnochon-trasnocha-y-ahorra.png",
+        sortOrder: 3,
+      },
+      {
         title: "Vinos seleccionados",
+        active: false,
         link: "/donde-estamos",
         imageUrl: "/images/separata/vinos.svg",
         sortOrder: 1,
@@ -66,18 +104,21 @@ async function main() {
         link: "/donde-estamos",
         imageUrl: "/images/separata/cervezas.svg",
         sortOrder: 2,
+        active: false,
       },
       {
         title: "Delicatessen",
         link: "/donde-estamos",
         imageUrl: "/images/separata/delicatessen.svg",
         sortOrder: 3,
+        active: false,
       },
       {
         title: "Mercado del mes",
         link: "/donde-estamos",
         imageUrl: "/images/separata/mercado.svg",
         sortOrder: 4,
+        active: false,
       },
     ],
   });

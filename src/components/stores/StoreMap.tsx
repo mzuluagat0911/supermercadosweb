@@ -6,6 +6,7 @@ import L from "leaflet";
 import type { Store } from "@/generated/prisma/client";
 import { BRAND_LABELS } from "@/lib/constants";
 import { createMapPinHtml, getStoresCenter } from "@/lib/map-pins";
+import { OSM_TILES } from "@/lib/map-tiles";
 import { formatWhatsAppLink } from "@/lib/format";
 import "leaflet/dist/leaflet.css";
 
@@ -68,8 +69,9 @@ export function StoreMap({ stores, selectedId, onSelect }: StoreMapProps) {
         className="h-[460px] w-full"
       >
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-          url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+          attribution={OSM_TILES.attribution}
+          url={OSM_TILES.url}
+          maxZoom={OSM_TILES.maxZoom}
         />
         <MapController selectedId={selectedId} stores={stores} />
         {stores.map((store) => {
