@@ -18,8 +18,41 @@ async function main() {
   await prisma.siteSettings.deleteMany();
   await prisma.adminUser.deleteMany();
 
+  const ofertas = [
+    ["Aseo y cuidado", "/images/separata/ofertas-01.jpg"],
+    ["Huevos, lácteos y bebidas", "/images/separata/ofertas-02.jpg"],
+    ["Arequipe, quesos y yogurt", "/images/separata/ofertas-03.jpg"],
+    ["Lácteos y despensa", "/images/separata/ofertas-04.jpg"],
+    ["Arroces", "/images/separata/ofertas-05.jpg"],
+    ["Carnes de cerdo", "/images/separata/ofertas-06.jpg"],
+    ["Cereales, café y pan", "/images/separata/ofertas-07.jpg"],
+    ["Papel, galletas y snacks", "/images/separata/ofertas-08.jpg"],
+    ["Despensa", "/images/separata/ofertas-09.jpg"],
+    ["Aseo del hogar", "/images/separata/ofertas-10.jpg"],
+    ["Cuidado personal", "/images/separata/ofertas-11.jpg"],
+    ["Licorera de Caldas", "/images/separata/ofertas-12.jpg"],
+    ["Fruver", "/images/separata/ofertas-13.jpg"],
+    ["Salsas y arepas", "/images/separata/ofertas-14.jpg"],
+    ["Pollo", "/images/separata/ofertas-15.jpg"],
+    ["Embutidos y congelados", "/images/separata/ofertas-16.jpg"],
+    ["Yogures y cárnicos", "/images/separata/ofertas-17.jpg"],
+    ["Aceites y margarinas", "/images/separata/ofertas-18.jpg"],
+    ["Higiene y aseo", "/images/separata/ofertas-19.jpg"],
+    ["Pastas y despensa", "/images/separata/ofertas-20.jpg"],
+  ] as const;
+
   await prisma.banner.createMany({
     data: [
+      ...ofertas.map(([title, imageUrl], index) => ({
+        tag: "Ofertas q'encantan",
+        title,
+        body: "Del 1 al 5 de octubre.",
+        imageUrl,
+        ctaText: "Ver sucursales",
+        ctaLink: "/donde-estamos",
+        ctaType: "OFFERS" as const,
+        sortOrder: index + 1,
+      })),
       {
         tag: "Trasnochón",
         title: "El ahorro sale de noche",

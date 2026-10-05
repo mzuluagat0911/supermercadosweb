@@ -38,15 +38,15 @@ export function HeroSlider({ banners }: HeroSliderProps) {
   return (
     <section className="relative overflow-hidden">
       {isArtwork ? (
-        <div key={banner.id} className="relative bg-[#071433]">
+        <div key={banner.id} className="flex justify-center bg-[#f6f3ee] px-4 py-6 sm:px-8">
           <Image
             src={banner.imageUrl}
             alt={banner.title}
-            width={1024}
-            height={320}
+            width={837}
+            height={1024}
             priority
-            sizes="100vw"
-            className="h-auto w-full"
+            sizes="(max-width: 768px) 100vw, 720px"
+            className="h-auto max-h-[82vh] w-auto max-w-full rounded-2xl shadow-[0_18px_50px_-28px_rgba(40,20,10,0.45)]"
           />
         </div>
       ) : (
@@ -116,7 +116,7 @@ export function HeroSlider({ banners }: HeroSliderProps) {
             <button
               type="button"
               onClick={prev}
-              className="absolute left-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/15 p-2 text-white backdrop-blur-sm transition hover:bg-white/25"
+              className="absolute left-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white p-2 text-foreground shadow-md transition hover:bg-white/90"
               aria-label="Anterior"
             >
               <ChevronLeft className="h-6 w-6" />
@@ -124,7 +124,7 @@ export function HeroSlider({ banners }: HeroSliderProps) {
             <button
               type="button"
               onClick={next}
-              className="absolute right-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/15 p-2 text-white backdrop-blur-sm transition hover:bg-white/25"
+              className="absolute right-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white p-2 text-foreground shadow-md transition hover:bg-white/90"
               aria-label="Siguiente"
             >
               <ChevronRight className="h-6 w-6" />
@@ -137,7 +137,7 @@ export function HeroSlider({ banners }: HeroSliderProps) {
                   type="button"
                   onClick={() => setCurrent(index)}
                   className={`h-2 rounded-full transition-all ${
-                    index === current ? "w-8 bg-white" : "w-2 bg-white/50"
+                    index === current ? "w-8 bg-foreground" : "w-2 bg-foreground/30"
                   }`}
                   aria-label={`Ir al banner ${index + 1}`}
                 />
