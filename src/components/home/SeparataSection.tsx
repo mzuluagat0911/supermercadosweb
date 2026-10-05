@@ -42,7 +42,7 @@ export function SeparataSection({ items }: SeparataSectionProps) {
   const item = items[current];
 
   return (
-    <section className="relative overflow-hidden bg-[#f3efe6] py-20">
+    <section className="relative overflow-hidden bg-[#f3efe6] py-12 sm:py-20">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 opacity-70"
@@ -130,7 +130,7 @@ export function SeparataSection({ items }: SeparataSectionProps) {
             <button
               type="button"
               onClick={() => goTo(current - 1)}
-              className="absolute left-0 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white p-2.5 text-foreground shadow-lg ring-1 ring-black/5 transition hover:bg-[#fffdf8] sm:left-2"
+              className="absolute left-0 top-1/2 z-10 hidden -translate-y-1/2 rounded-full bg-white p-2.5 text-foreground shadow-lg ring-1 ring-black/5 transition hover:bg-[#fffdf8] sm:left-2 sm:block"
               aria-label="Página anterior"
             >
               <ChevronLeft className="h-5 w-5" />
@@ -140,7 +140,7 @@ export function SeparataSection({ items }: SeparataSectionProps) {
             <button
               type="button"
               onClick={() => goTo(current + 1)}
-              className="absolute right-0 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white p-2.5 text-foreground shadow-lg ring-1 ring-black/5 transition hover:bg-[#fffdf8] sm:right-2"
+              className="absolute right-0 top-1/2 z-10 hidden -translate-y-1/2 rounded-full bg-white p-2.5 text-foreground shadow-lg ring-1 ring-black/5 transition hover:bg-[#fffdf8] sm:right-2 sm:block"
               aria-label="Página siguiente"
             >
               <ChevronRight className="h-5 w-5" />
@@ -148,12 +148,38 @@ export function SeparataSection({ items }: SeparataSectionProps) {
           )}
         </div>
 
-        <div className="mt-6 flex items-center justify-center gap-3 text-sm">
-          <p className="font-display text-lg font-semibold">{item.title}</p>
-          <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold tracking-wide text-muted ring-1 ring-black/5">
+        <div className="mt-4 flex flex-col items-center justify-center gap-3 text-sm sm:mt-6 sm:flex-row">
+          <div className="flex items-center gap-3 sm:hidden">
+            <button
+              type="button"
+              onClick={() => goTo(current - 1)}
+              disabled={current === 0}
+              className="rounded-full bg-white p-2.5 text-foreground shadow-md ring-1 ring-black/5 disabled:opacity-40"
+              aria-label="Página anterior"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+            <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold tracking-wide text-muted ring-1 ring-black/5">
+              {current + 1} / {items.length}
+            </span>
+            <button
+              type="button"
+              onClick={() => goTo(current + 1)}
+              disabled={current === last}
+              className="rounded-full bg-white p-2.5 text-foreground shadow-md ring-1 ring-black/5 disabled:opacity-40"
+              aria-label="Página siguiente"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          </div>
+          <p className="text-center font-display text-lg font-semibold">{item.title}</p>
+          <span className="hidden rounded-full bg-white px-3 py-1 text-xs font-semibold tracking-wide text-muted ring-1 ring-black/5 sm:inline">
             Página {current + 1} de {items.length}
           </span>
         </div>
+        <p className="mt-2 text-center text-xs text-muted sm:hidden">
+          Desliza para pasar de página · toca para ampliar
+        </p>
 
         <div className="mt-6 flex gap-2 overflow-x-auto pb-2">
           {items.map((thumb, index) => {
