@@ -17,9 +17,6 @@ export function SeparataSection({ items }: SeparataSectionProps) {
 
   if (items.length === 0) return null;
 
-  const [featured, ...rest] = items;
-  const showBento = items.length >= 3;
-
   function openAt(id: string) {
     const index = items.findIndex((item) => item.id === id);
     if (index >= 0) setActiveIndex(index);
@@ -41,8 +38,8 @@ export function SeparataSection({ items }: SeparataSectionProps) {
           <SectionHeading
             align="left"
             eyebrow="Separata"
-            title="Ofertas para hacer tu mercado"
-            description="Descuentos de la temporada listos para aprovechar en tu sucursal más cercana."
+            title="Ofertas q'encantan"
+            description="Del 1 al 5 de octubre. Abre cada página para ver los precios y descuentos."
           />
           <Link
             href="/donde-estamos"
@@ -52,37 +49,16 @@ export function SeparataSection({ items }: SeparataSectionProps) {
           </Link>
         </div>
 
-        {showBento ? (
-          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
+          {items.map((item, index) => (
             <Card
-              item={featured}
-              featured
-              priority
-              className="lg:col-span-2 lg:row-span-2"
-              onOpen={() => openAt(featured.id)}
+              key={item.id}
+              item={item}
+              priority={index < 4}
+              onOpen={() => openAt(item.id)}
             />
-            {rest.slice(0, 4).map((item, index) => (
-              <Card
-                key={item.id}
-                item={item}
-                priority={index < 2}
-                onOpen={() => openAt(item.id)}
-              />
-            ))}
-          </div>
-        ) : (
-          <div className="-mx-4 mt-12 flex gap-4 overflow-x-auto px-4 pb-2 snap-x snap-mandatory sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 lg:grid-cols-4">
-            {items.map((item, index) => (
-              <Card
-                key={item.id}
-                item={item}
-                priority={index < 2}
-                className="w-[78vw] shrink-0 snap-center sm:w-auto"
-                onOpen={() => openAt(item.id)}
-              />
-            ))}
-          </div>
-        )}
+          ))}
+        </div>
       </div>
 
       {activeIndex !== null && (
@@ -99,15 +75,11 @@ export function SeparataSection({ items }: SeparataSectionProps) {
 
 function Card({
   item,
-  className = "",
   priority = false,
-  featured = false,
   onOpen,
 }: {
   item: SeparataItem;
-  className?: string;
   priority?: boolean;
-  featured?: boolean;
   onOpen: () => void;
 }) {
   return (
@@ -115,20 +87,16 @@ function Card({
       type="button"
       onClick={onOpen}
       aria-label={`Ver ${item.title} en detalle`}
-      className={`block w-full cursor-zoom-in text-left ${className}`}
+      className="block w-full cursor-zoom-in text-left"
     >
-      <article
-        className={`group relative aspect-square overflow-hidden rounded-[1.35rem] bg-white shadow-[0_18px_50px_-28px_rgba(40,20,10,0.45)] ring-1 ring-black/5 transition duration-500 hover:-translate-y-1.5 hover:shadow-[0_28px_60px_-24px_rgba(40,20,10,0.55)] ${
-          featured ? "lg:aspect-auto lg:h-full lg:min-h-[32rem]" : ""
-        }`}
-      >
+      <article className="group relative aspect-[4/5] overflow-hidden rounded-[1.35rem] bg-white shadow-[0_18px_50px_-28px_rgba(40,20,10,0.45)] ring-1 ring-black/5 transition duration-500 hover:-translate-y-1.5 hover:shadow-[0_28px_60px_-24px_rgba(40,20,10,0.55)]">
         <Image
           src={item.imageUrl}
           alt={item.title}
           fill
           priority={priority}
-          sizes={featured ? "(max-width: 1024px) 100vw, 50vw" : "(max-width: 640px) 80vw, 25vw"}
-          className="object-contain bg-[#071433] transition duration-700 group-hover:scale-[1.02]"
+          sizes="(max-width: 640px) 50vw, 25vw"
+          className="object-cover"
         />
         <div className="absolute inset-0 flex items-end justify-center bg-gradient-to-t from-black/45 via-transparent to-transparent opacity-0 transition duration-300 group-hover:opacity-100">
           <span className="mb-5 inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-foreground shadow-lg">
