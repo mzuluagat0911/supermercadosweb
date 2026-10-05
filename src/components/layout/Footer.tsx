@@ -10,7 +10,7 @@ type FooterProps = {
 
 export function Footer({ settings }: FooterProps) {
   return (
-    <footer className="mt-auto border-t border-border bg-[#f7f5f2] text-foreground">
+    <footer className="mt-auto border-t border-border bg-white text-foreground">
       <div className="section-container py-12 lg:py-14">
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-5">

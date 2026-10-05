@@ -39,7 +39,7 @@ export function HeroSlider({ banners }: HeroSliderProps) {
   return (
     <section className="relative overflow-hidden">
       {isArtwork && isPortrait ? (
-        <div key={banner.id} className="flex justify-center bg-[#f6f3ee] px-4 py-6 sm:px-8">
+        <div key={banner.id} className="flex justify-center bg-white px-4 py-6 sm:px-8">
           <Image
             src={banner.imageUrl}
             alt={banner.title}

@@ -42,16 +42,7 @@ export function SeparataSection({ items }: SeparataSectionProps) {
   const item = items[current];
 
   return (
-    <section className="relative overflow-hidden bg-[#f3efe6] py-12 sm:py-20">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-70"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle at 18% 12%, rgba(227,27,35,0.08), transparent 36%), radial-gradient(circle at 86% 80%, rgba(26,159,66,0.08), transparent 34%)",
-        }}
-      />
-
+    <section className="relative overflow-hidden bg-white py-12 sm:py-20">
       <div className="section-container relative">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <SectionHeading
