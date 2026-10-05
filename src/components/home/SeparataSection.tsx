@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { createPortal } from "react-dom";
@@ -13,23 +13,42 @@ type SeparataSectionProps = {
 };
 
 export function SeparataSection({ items }: SeparataSectionProps) {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [page, setPage] = useState(0);
+  const [zoom, setZoom] = useState<number | null>(null);
+  const touchStart = useRef(0);
+  const thumbsRef = useRef<Array<HTMLButtonElement | null>>([]);
+
+  const last = Math.max(items.length - 1, 0);
+  const current = Math.min(page, last);
+
+  const goTo = useCallback(
+    (index: number) => {
+      if (items.length === 0) return;
+      setPage(Math.max(0, Math.min(index, items.length - 1)));
+    },
+    [items.length],
+  );
+
+  useEffect(() => {
+    thumbsRef.current[current]?.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "center",
+    });
+  }, [current]);
 
   if (items.length === 0) return null;
 
-  function openAt(id: string) {
-    const index = items.findIndex((item) => item.id === id);
-    if (index >= 0) setActiveIndex(index);
-  }
+  const item = items[current];
 
   return (
-    <section className="relative overflow-hidden bg-[#faf8f5] py-20">
+    <section className="relative overflow-hidden bg-[#f3efe6] py-20">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.35]"
+        className="pointer-events-none absolute inset-0 opacity-70"
         style={{
           backgroundImage:
-            "radial-gradient(circle at 12% 20%, rgba(227,27,35,0.08), transparent 42%), radial-gradient(circle at 88% 70%, rgba(26,159,66,0.1), transparent 40%)",
+            "radial-gradient(circle at 18% 12%, rgba(227,27,35,0.08), transparent 36%), radial-gradient(circle at 86% 80%, rgba(26,159,66,0.08), transparent 34%)",
         }}
       />
 
@@ -39,7 +58,7 @@ export function SeparataSection({ items }: SeparataSectionProps) {
             align="left"
             eyebrow="Separata"
             title="Ofertas q'encantan"
-            description="Del 1 al 5 de octubre. Abre cada página para ver los precios y descuentos."
+            description="Del 1 al 5 de octubre. Pasa las páginas como en el periódico de ofertas."
           />
           <Link
             href="/donde-estamos"
@@ -49,62 +68,159 @@ export function SeparataSection({ items }: SeparataSectionProps) {
           </Link>
         </div>
 
-        <div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
-          {items.map((item, index) => (
-            <Card
-              key={item.id}
-              item={item}
-              priority={index < 4}
-              onOpen={() => openAt(item.id)}
+        <div
+          className="relative mt-10"
+          onTouchStart={(event) => {
+            touchStart.current = event.touches[0]?.clientX ?? 0;
+          }}
+          onTouchEnd={(event) => {
+            const end = event.changedTouches[0]?.clientX ?? 0;
+            const delta = end - touchStart.current;
+            if (delta > 48) goTo(current - 1);
+            if (delta < -48) goTo(current + 1);
+          }}
+        >
+          <div className="flex items-center justify-center gap-3 sm:gap-6">
+            <PagePeek
+              item={items[current - 1]}
+              side="left"
+              onOpen={() => goTo(current - 1)}
             />
-          ))}
+
+            <div className="relative w-[min(100%,440px)] shrink-0">
+              <div
+                aria-hidden
+                className="absolute inset-0 translate-x-3 translate-y-3 rounded-[1.25rem] bg-white/80 shadow-md"
+              />
+              <div
+                aria-hidden
+                className="absolute inset-0 translate-x-1.5 translate-y-1.5 rounded-[1.25rem] bg-[#fffdf8] shadow"
+              />
+              <button
+                type="button"
+                onClick={() => setZoom(current)}
+                className="group relative block w-full cursor-zoom-in overflow-hidden rounded-[1.25rem] bg-white text-left shadow-[0_24px_60px_-28px_rgba(40,20,10,0.55)] ring-1 ring-black/10"
+                aria-label={`Abrir ${item.title}`}
+              >
+                <span className="relative block aspect-[4/5]">
+                  <Image
+                    src={item.imageUrl}
+                    alt={item.title}
+                    fill
+                    priority={current < 2}
+                    sizes="(max-width: 768px) 92vw, 440px"
+                    className="object-cover"
+                  />
+                </span>
+                <span className="absolute bottom-4 left-1/2 inline-flex -translate-x-1/2 items-center gap-2 rounded-full bg-white/95 px-4 py-2 text-sm font-semibold text-foreground opacity-0 shadow-lg transition group-hover:opacity-100">
+                  <ZoomIn className="h-4 w-4" />
+                  Ver página
+                </span>
+              </button>
+            </div>
+
+            <PagePeek
+              item={items[current + 1]}
+              side="right"
+              onOpen={() => goTo(current + 1)}
+            />
+          </div>
+
+          {current > 0 && (
+            <button
+              type="button"
+              onClick={() => goTo(current - 1)}
+              className="absolute left-0 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white p-2.5 text-foreground shadow-lg ring-1 ring-black/5 transition hover:bg-[#fffdf8] sm:left-2"
+              aria-label="Página anterior"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+          )}
+          {current < last && (
+            <button
+              type="button"
+              onClick={() => goTo(current + 1)}
+              className="absolute right-0 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white p-2.5 text-foreground shadow-lg ring-1 ring-black/5 transition hover:bg-[#fffdf8] sm:right-2"
+              aria-label="Página siguiente"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          )}
+        </div>
+
+        <div className="mt-6 flex items-center justify-center gap-3 text-sm">
+          <p className="font-display text-lg font-semibold">{item.title}</p>
+          <span className="rounded-full bg-white px-3 py-1 text-xs font-semibold tracking-wide text-muted ring-1 ring-black/5">
+            Página {current + 1} de {items.length}
+          </span>
+        </div>
+
+        <div className="mt-6 flex gap-2 overflow-x-auto pb-2">
+          {items.map((thumb, index) => {
+            const selected = index === current;
+            return (
+              <button
+                key={thumb.id}
+                ref={(node) => {
+                  thumbsRef.current[index] = node;
+                }}
+                type="button"
+                onClick={() => goTo(index)}
+                aria-label={`Ir a ${thumb.title}`}
+                aria-current={selected ? "true" : undefined}
+                className={`relative h-20 w-16 shrink-0 overflow-hidden rounded-lg bg-white ring-2 transition ${
+                  selected
+                    ? "ring-ahorro shadow-md"
+                    : "ring-transparent opacity-70 hover:opacity-100"
+                }`}
+              >
+                <Image
+                  src={thumb.imageUrl}
+                  alt=""
+                  fill
+                  sizes="64px"
+                  className="object-cover"
+                />
+              </button>
+            );
+          })}
         </div>
       </div>
 
-      {activeIndex !== null && (
+      {zoom !== null && (
         <Lightbox
           items={items}
-          index={activeIndex}
-          onClose={() => setActiveIndex(null)}
-          onChange={setActiveIndex}
+          index={zoom}
+          onClose={() => setZoom(null)}
+          onChange={(index) => {
+            setZoom(index);
+            setPage(index);
+          }}
         />
       )}
     </section>
   );
 }
 
-function Card({
+function PagePeek({
   item,
-  priority = false,
+  side,
   onOpen,
 }: {
-  item: SeparataItem;
-  priority?: boolean;
+  item?: SeparataItem;
+  side: "left" | "right";
   onOpen: () => void;
 }) {
+  if (!item) return <div className="hidden w-[18%] max-w-[180px] md:block" />;
+
   return (
     <button
       type="button"
       onClick={onOpen}
-      aria-label={`Ver ${item.title} en detalle`}
-      className="block w-full cursor-zoom-in text-left"
+      aria-label={side === "left" ? "Página anterior" : "Página siguiente"}
+      className="relative hidden aspect-[4/5] w-[18%] max-w-[180px] overflow-hidden rounded-2xl opacity-55 shadow-lg ring-1 ring-black/10 transition hover:opacity-80 md:block"
     >
-      <article className="group relative aspect-[4/5] overflow-hidden rounded-[1.35rem] bg-white shadow-[0_18px_50px_-28px_rgba(40,20,10,0.45)] ring-1 ring-black/5 transition duration-500 hover:-translate-y-1.5 hover:shadow-[0_28px_60px_-24px_rgba(40,20,10,0.55)]">
-        <Image
-          src={item.imageUrl}
-          alt={item.title}
-          fill
-          priority={priority}
-          sizes="(max-width: 640px) 50vw, 25vw"
-          className="object-cover"
-        />
-        <div className="absolute inset-0 flex items-end justify-center bg-gradient-to-t from-black/45 via-transparent to-transparent opacity-0 transition duration-300 group-hover:opacity-100">
-          <span className="mb-5 inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-foreground shadow-lg">
-            <ZoomIn className="h-4 w-4" />
-            Ver detalle
-          </span>
-        </div>
-      </article>
+      <Image src={item.imageUrl} alt="" fill sizes="180px" className="object-cover" />
     </button>
   );
 }
@@ -172,14 +288,12 @@ function Lightbox({
         onClick={onClose}
       />
 
-      <div className="relative z-10 flex max-h-[min(92vh,1080px)] w-full max-w-[min(92vw,900px)] flex-col">
+      <div className="relative z-10 flex max-h-[min(92vh,1080px)] w-full max-w-[min(92vw,520px)] flex-col">
         <div className="mb-3 flex items-center justify-between gap-3 text-white">
           <div className="min-w-0">
-            <p className="truncate font-display text-lg font-semibold sm:text-xl">
-              {item.title}
-            </p>
+            <p className="truncate font-display text-lg font-semibold sm:text-xl">{item.title}</p>
             <p className="text-xs text-white/60">
-              {index + 1} / {items.length}
+              Página {index + 1} de {items.length}
             </p>
           </div>
           <button
@@ -192,15 +306,15 @@ function Lightbox({
           </button>
         </div>
 
-        <div className="relative overflow-hidden rounded-2xl bg-black shadow-2xl ring-1 ring-white/10">
-          <div className="relative aspect-square w-full">
+        <div className="relative overflow-hidden rounded-2xl bg-[#111] shadow-2xl ring-1 ring-white/10">
+          <div className="relative aspect-[4/5] w-full">
             <Image
               src={item.imageUrl}
               alt={item.title}
               fill
               priority
-              sizes="(max-width: 900px) 92vw, 900px"
-              className="object-contain bg-black"
+              sizes="520px"
+              className="object-contain"
             />
           </div>
 
