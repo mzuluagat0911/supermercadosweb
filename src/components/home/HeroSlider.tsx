@@ -51,21 +51,17 @@ export function HeroSlider({ banners }: HeroSliderProps) {
           />
         </div>
       ) : isArtwork ? (
-        <div key={banner.id} className="relative bg-[#071433]">
-          <div className="overflow-x-auto sm:overflow-visible">
-            <Image
-              src={banner.imageUrl}
-              alt={banner.title}
-              width={1024}
-              height={320}
-              priority
-              sizes="100vw"
-              className="h-[210px] w-auto max-w-none sm:h-auto sm:w-full"
-            />
-          </div>
-          <p className="pointer-events-none absolute bottom-2 right-3 rounded-full bg-black/55 px-2.5 py-1 text-[11px] font-semibold text-white sm:hidden">
-            Desliza el banner
-          </p>
+        <div key={banner.id} className="w-full bg-[#071433]">
+          <Image
+            src={banner.imageUrl}
+            alt={banner.title}
+            width={1024}
+            height={320}
+            priority
+            sizes="100vw"
+            className="h-auto w-full"
+            style={{ width: "100%", height: "auto" }}
+          />
         </div>
       ) : (
       <div className={`relative min-h-[520px] ${gradient}`}>
