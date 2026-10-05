@@ -52,6 +52,7 @@ async function main() {
         ctaLink: "/donde-estamos",
         ctaType: "OFFERS" as const,
         sortOrder: index + 1,
+        active: false,
       })),
       {
         tag: "Trasnochón",
@@ -62,7 +63,6 @@ async function main() {
         ctaLink: "/donde-estamos",
         ctaType: "STORES",
         sortOrder: 0,
-        active: false,
       },
       {
         tag: "Quincenazo",

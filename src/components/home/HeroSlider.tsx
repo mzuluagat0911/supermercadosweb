@@ -34,10 +34,11 @@ export function HeroSlider({ banners }: HeroSliderProps) {
   const banner = banners[current];
   const gradient = GRADIENTS[current % GRADIENTS.length];
   const isArtwork = /\.(png|jpe?g|webp)$/i.test(banner.imageUrl);
+  const isPortrait = banner.imageUrl.includes("/images/separata/");
 
   return (
     <section className="relative overflow-hidden">
-      {isArtwork ? (
+      {isArtwork && isPortrait ? (
         <div key={banner.id} className="flex justify-center bg-[#f6f3ee] px-4 py-6 sm:px-8">
           <Image
             src={banner.imageUrl}
@@ -47,6 +48,18 @@ export function HeroSlider({ banners }: HeroSliderProps) {
             priority
             sizes="(max-width: 768px) 100vw, 720px"
             className="h-auto max-h-[82vh] w-auto max-w-full rounded-2xl shadow-[0_18px_50px_-28px_rgba(40,20,10,0.45)]"
+          />
+        </div>
+      ) : isArtwork ? (
+        <div key={banner.id} className="relative bg-[#071433]">
+          <Image
+            src={banner.imageUrl}
+            alt={banner.title}
+            width={1024}
+            height={320}
+            priority
+            sizes="100vw"
+            className="h-auto w-full"
           />
         </div>
       ) : (
