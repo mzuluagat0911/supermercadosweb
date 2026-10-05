@@ -55,6 +55,16 @@ async function main() {
         active: false,
       })),
       {
+        tag: "Ofertas q'encantan",
+        title: "Ofertas q'encantan",
+        body: "Del 1 al 5 de octubre.",
+        imageUrl: "/images/banners/ofertas-q-encantan.jpg",
+        ctaText: "Ver sucursales",
+        ctaLink: "/donde-estamos",
+        ctaType: "OFFERS",
+        sortOrder: 0,
+      },
+      {
         tag: "Trasnochón",
         title: "El ahorro sale de noche",
         body: "Gran Trasnochón. Miércoles 30 de septiembre, desde las 4:00 p.m. hasta el cierre del supermercado.",
@@ -62,7 +72,8 @@ async function main() {
         ctaText: "Ver sucursales",
         ctaLink: "/donde-estamos",
         ctaType: "STORES",
-        sortOrder: 0,
+        sortOrder: 1,
+        active: false,
       },
       {
         tag: "Quincenazo",
