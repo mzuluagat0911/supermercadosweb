@@ -58,7 +58,7 @@ async function main() {
         tag: "Ofertas q'encantan",
         title: "Ofertas q'encantan",
         body: "Del 1 al 5 de octubre.",
-        imageUrl: "/images/banners/ofertas-q-encantan.jpg",
+        imageUrl: "/images/banners/ofertas-q-encantan-hd.jpg",
         ctaText: "Ver sucursales",
         ctaLink: "/donde-estamos",
         ctaType: "OFFERS",

@@ -55,8 +55,9 @@ export function HeroSlider({ banners }: HeroSliderProps) {
           <Image
             src={banner.imageUrl}
             alt={banner.title}
-            width={1024}
-            height={320}
+            width={3840}
+            height={1200}
+            quality={90}
             priority
             sizes="100vw"
             className="h-auto w-full"
