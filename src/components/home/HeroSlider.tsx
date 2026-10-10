@@ -53,7 +53,7 @@ export function HeroSlider({ banners }: HeroSliderProps) {
           />
         </div>
       ) : isArtwork ? (
-        <div key={banner.id} className="w-full bg-[#071433]">
+        <div key={banner.id} className="w-full bg-white">
           <Image
             src={banner.imageUrl}
             alt={banner.title}

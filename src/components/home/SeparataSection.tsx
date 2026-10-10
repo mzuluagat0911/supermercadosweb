@@ -15,27 +15,61 @@ type SeparataSectionProps = {
 export function SeparataSection({ items }: SeparataSectionProps) {
   const [page, setPage] = useState(0);
   const [zoom, setZoom] = useState<number | null>(null);
-  const touchStart = useRef(0);
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const railRef = useRef<HTMLDivElement>(null);
   const thumbsRef = useRef<Array<HTMLButtonElement | null>>([]);
+  const scrollLeftOnPress = useRef(0);
 
   const last = Math.max(items.length - 1, 0);
   const current = Math.min(page, last);
 
+  const scrollToIndex = useCallback((index: number, behavior: ScrollBehavior = "smooth") => {
+    const scroller = scrollerRef.current;
+    const slide = scroller?.querySelector<HTMLElement>(`[data-slide="${index}"]`);
+    if (!scroller || !slide) return;
+    const left = slide.offsetLeft - (scroller.clientWidth - slide.offsetWidth) / 2;
+    scroller.scrollTo({ left, behavior });
+  }, []);
+
   const goTo = useCallback(
     (index: number) => {
       if (items.length === 0) return;
-      setPage(Math.max(0, Math.min(index, items.length - 1)));
+      const next = Math.max(0, Math.min(index, items.length - 1));
+      setPage(next);
+      scrollToIndex(next);
     },
-    [items.length],
+    [items.length, scrollToIndex],
   );
 
   useEffect(() => {
-    thumbsRef.current[current]?.scrollIntoView({
-      behavior: "smooth",
-      block: "nearest",
-      inline: "center",
-    });
+    scrollToIndex(0, "auto");
+  }, [items, scrollToIndex]);
+
+  useEffect(() => {
+    const rail = railRef.current;
+    const thumb = thumbsRef.current[current];
+    if (!rail || !thumb) return;
+    const left = thumb.offsetLeft - (rail.clientWidth - thumb.offsetWidth) / 2;
+    rail.scrollTo({ left, behavior: "smooth" });
   }, [current]);
+
+  const syncPageFromScroll = useCallback(() => {
+    const scroller = scrollerRef.current;
+    if (!scroller) return;
+    const mid = scroller.scrollLeft + scroller.clientWidth / 2;
+    let closest = 0;
+    let best = Number.POSITIVE_INFINITY;
+    scroller.querySelectorAll<HTMLElement>("[data-slide]").forEach((slide) => {
+      const index = Number(slide.dataset.slide);
+      const center = slide.offsetLeft + slide.offsetWidth / 2;
+      const distance = Math.abs(center - mid);
+      if (distance < best) {
+        best = distance;
+        closest = index;
+      }
+    });
+    setPage((prev) => (prev === closest ? prev : closest));
+  }, []);
 
   if (items.length === 0) return null;
 
@@ -59,69 +93,66 @@ export function SeparataSection({ items }: SeparataSectionProps) {
           </Link>
         </div>
 
-        <div
-          className="relative mt-10"
-          onTouchStart={(event) => {
-            touchStart.current = event.touches[0]?.clientX ?? 0;
-          }}
-          onTouchEnd={(event) => {
-            const end = event.changedTouches[0]?.clientX ?? 0;
-            const delta = end - touchStart.current;
-            if (delta > 48) goTo(current - 1);
-            if (delta < -48) goTo(current + 1);
-          }}
-        >
-          <div className="flex items-center justify-center gap-3 sm:gap-6">
-            <PagePeek
-              item={items[current - 1]}
-              side="left"
-              onOpen={() => goTo(current - 1)}
-            />
-
-            <div className="relative w-[min(100%,440px)] shrink-0">
-              <div
-                aria-hidden
-                className="absolute inset-0 translate-x-3 translate-y-3 rounded-[1.25rem] bg-white/80 shadow-md"
-              />
-              <div
-                aria-hidden
-                className="absolute inset-0 translate-x-1.5 translate-y-1.5 rounded-[1.25rem] bg-[#fffdf8] shadow"
-              />
-              <button
-                type="button"
-                onClick={() => setZoom(current)}
-                className="group relative block w-full cursor-zoom-in overflow-hidden rounded-[1.25rem] bg-white text-left shadow-[0_24px_60px_-28px_rgba(40,20,10,0.55)] ring-1 ring-black/10"
-                aria-label={`Abrir ${item.title}`}
-              >
-                <span className="relative block aspect-[4/5]">
+        <div className="relative mt-10">
+          <div
+            ref={scrollerRef}
+            onScroll={syncPageFromScroll}
+            className="flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
+            <div aria-hidden className="w-[11%] shrink-0 sm:w-[max(11%,calc(50%-220px))]" />
+            {items.map((slide, index) => {
+              const active = index === current;
+              return (
+                <div
+                  key={slide.id}
+                  data-slide={index}
+                  role="button"
+                  tabIndex={0}
+                  onPointerDown={() => {
+                    scrollLeftOnPress.current = scrollerRef.current?.scrollLeft ?? 0;
+                  }}
+                  onClick={() => {
+                    const moved = Math.abs((scrollerRef.current?.scrollLeft ?? 0) - scrollLeftOnPress.current) > 8;
+                    if (moved) return;
+                    if (!active) goTo(index);
+                    else setZoom(index);
+                  }}
+                  onKeyDown={(event) => {
+                    if (event.key !== "Enter" && event.key !== " ") return;
+                    event.preventDefault();
+                    if (!active) goTo(index);
+                    else setZoom(index);
+                  }}
+                  className={`group relative aspect-[4/5] w-[78%] max-w-[440px] shrink-0 snap-center overflow-hidden rounded-[1.25rem] bg-white text-left shadow-[0_24px_60px_-28px_rgba(40,20,10,0.55)] ring-1 ring-black/10 transition ${
+                    active ? "cursor-zoom-in" : "cursor-pointer opacity-80 hover:opacity-100"
+                  }`}
+                  aria-label={active ? `Abrir ${slide.title}` : `Ver ${slide.title}`}
+                >
                   <Image
-                    src={item.imageUrl}
-                    alt={item.title}
+                    src={slide.imageUrl}
+                    alt={slide.title}
                     fill
-                    priority={current < 2}
-                    sizes="(max-width: 768px) 92vw, 440px"
+                    priority={index < 2}
+                    sizes="(max-width: 768px) 78vw, 440px"
                     className="object-contain"
                   />
-                </span>
-                <span className="absolute bottom-4 left-1/2 inline-flex -translate-x-1/2 items-center gap-2 rounded-full bg-white/95 px-4 py-2 text-sm font-semibold text-foreground opacity-0 shadow-lg transition group-hover:opacity-100">
-                  <ZoomIn className="h-4 w-4" />
-                  Ver página
-                </span>
-              </button>
-            </div>
-
-            <PagePeek
-              item={items[current + 1]}
-              side="right"
-              onOpen={() => goTo(current + 1)}
-            />
+                  {active && (
+                    <span className="absolute bottom-4 left-1/2 inline-flex -translate-x-1/2 items-center gap-2 rounded-full bg-white/95 px-4 py-2 text-sm font-semibold text-foreground opacity-0 shadow-lg transition group-hover:opacity-100">
+                      <ZoomIn className="h-4 w-4" />
+                      Ver página
+                    </span>
+                  )}
+                </div>
+              );
+            })}
+            <div aria-hidden className="w-[11%] shrink-0 sm:w-[max(11%,calc(50%-220px))]" />
           </div>
 
           {current > 0 && (
             <button
               type="button"
               onClick={() => goTo(current - 1)}
-              className="absolute left-0 top-1/2 z-10 hidden -translate-y-1/2 rounded-full bg-white p-2.5 text-foreground shadow-lg ring-1 ring-black/5 transition hover:bg-[#fffdf8] sm:left-2 sm:block"
+              className="absolute left-1 top-1/2 z-10 hidden -translate-y-1/2 rounded-full bg-white p-2.5 text-foreground shadow-lg ring-1 ring-black/5 transition hover:bg-[#fffdf8] sm:left-3 sm:block"
               aria-label="Página anterior"
             >
               <ChevronLeft className="h-5 w-5" />
@@ -131,7 +162,7 @@ export function SeparataSection({ items }: SeparataSectionProps) {
             <button
               type="button"
               onClick={() => goTo(current + 1)}
-              className="absolute right-0 top-1/2 z-10 hidden -translate-y-1/2 rounded-full bg-white p-2.5 text-foreground shadow-lg ring-1 ring-black/5 transition hover:bg-[#fffdf8] sm:right-2 sm:block"
+              className="absolute right-1 top-1/2 z-10 hidden -translate-y-1/2 rounded-full bg-white p-2.5 text-foreground shadow-lg ring-1 ring-black/5 transition hover:bg-[#fffdf8] sm:right-3 sm:block"
               aria-label="Página siguiente"
             >
               <ChevronRight className="h-5 w-5" />
@@ -172,7 +203,7 @@ export function SeparataSection({ items }: SeparataSectionProps) {
           Desliza para pasar de página · toca para ampliar
         </p>
 
-        <div className="mt-6 flex gap-2 overflow-x-auto pb-2">
+        <div ref={railRef} className="mt-6 flex gap-2 overflow-x-auto pb-2">
           {items.map((thumb, index) => {
             const selected = index === current;
             return (
@@ -216,29 +247,6 @@ export function SeparataSection({ items }: SeparataSectionProps) {
         />
       )}
     </section>
-  );
-}
-
-function PagePeek({
-  item,
-  side,
-  onOpen,
-}: {
-  item?: SeparataItem;
-  side: "left" | "right";
-  onOpen: () => void;
-}) {
-  if (!item) return <div className="hidden w-[18%] max-w-[180px] md:block" />;
-
-  return (
-    <button
-      type="button"
-      onClick={onOpen}
-      aria-label={side === "left" ? "Página anterior" : "Página siguiente"}
-      className="relative hidden aspect-[4/5] w-[18%] max-w-[180px] overflow-hidden rounded-2xl opacity-55 shadow-lg ring-1 ring-black/10 transition hover:opacity-80 md:block"
-    >
-      <Image src={item.imageUrl} alt="" fill sizes="180px" className="object-cover" />
-    </button>
   );
 }
 

@@ -49,7 +49,7 @@ async function main() {
         tag: "Déjate encantar",
         title: "En octubre, déjate encantar",
         body: "Del 9 al 12 de octubre.",
-        imageUrl: "/images/banners/dejate-encantar.jpg",
+        imageUrl: "/images/banners/home-cerdo-octubre.jpg",
         ctaText: "Ver sucursales",
         ctaLink: "/donde-estamos",
         ctaType: "OFFERS",
