@@ -19,34 +19,25 @@ async function main() {
   await prisma.adminUser.deleteMany();
 
   const ofertas = [
-    ["Aseo y cuidado", "/images/separata/ofertas-01.jpg"],
-    ["Huevos, lácteos y bebidas", "/images/separata/ofertas-02.jpg"],
-    ["Arequipe, quesos y yogurt", "/images/separata/ofertas-03.jpg"],
-    ["Lácteos y despensa", "/images/separata/ofertas-04.jpg"],
-    ["Arroces", "/images/separata/ofertas-05.jpg"],
-    ["Carnes de cerdo", "/images/separata/ofertas-06.jpg"],
-    ["Cereales, café y pan", "/images/separata/ofertas-07.jpg"],
-    ["Papel, galletas y snacks", "/images/separata/ofertas-08.jpg"],
-    ["Despensa", "/images/separata/ofertas-09.jpg"],
-    ["Aseo del hogar", "/images/separata/ofertas-10.jpg"],
-    ["Cuidado personal", "/images/separata/ofertas-11.jpg"],
-    ["Licorera de Caldas", "/images/separata/ofertas-12.jpg"],
-    ["Fruver", "/images/separata/ofertas-13.jpg"],
-    ["Salsas y arepas", "/images/separata/ofertas-14.jpg"],
-    ["Pollo", "/images/separata/ofertas-15.jpg"],
-    ["Embutidos y congelados", "/images/separata/ofertas-16.jpg"],
-    ["Yogures y cárnicos", "/images/separata/ofertas-17.jpg"],
-    ["Aceites y margarinas", "/images/separata/ofertas-18.jpg"],
-    ["Higiene y aseo", "/images/separata/ofertas-19.jpg"],
-    ["Pastas y despensa", "/images/separata/ofertas-20.jpg"],
+    ["Déjate encantar", "/images/separata/octubre-01.jpg"],
+    ["Leche y aceites", "/images/separata/octubre-02.jpg"],
+    ["Aseo del hogar", "/images/separata/octubre-03.jpg"],
+    ["Atún", "/images/separata/octubre-04.jpg"],
+    ["Whiskies", "/images/separata/octubre-05.jpg"],
+    ["Licorera de Caldas", "/images/separata/octubre-06.jpg"],
+    ["Quesitos Colanta", "/images/separata/octubre-07.jpg"],
+    ["Quesos Colanta", "/images/separata/octubre-08.jpg"],
+    ["Pollo", "/images/separata/octubre-09.jpg"],
+    ["Cerdo", "/images/separata/octubre-10.jpg"],
+    ["Fruver", "/images/separata/octubre-11.jpg"],
   ] as const;
 
   await prisma.banner.createMany({
     data: [
       ...ofertas.map(([title, imageUrl], index) => ({
-        tag: "Ofertas q'encantan",
+        tag: "Déjate encantar",
         title,
-        body: "Del 1 al 5 de octubre.",
+        body: "Del 9 al 12 de octubre.",
         imageUrl,
         ctaText: "Ver sucursales",
         ctaLink: "/donde-estamos",
@@ -55,6 +46,16 @@ async function main() {
         active: false,
       })),
       {
+        tag: "Déjate encantar",
+        title: "En octubre, déjate encantar",
+        body: "Del 9 al 12 de octubre.",
+        imageUrl: "/images/banners/dejate-encantar.jpg",
+        ctaText: "Ver sucursales",
+        ctaLink: "/donde-estamos",
+        ctaType: "OFFERS",
+        sortOrder: 0,
+      },
+      {
         tag: "Ofertas q'encantan",
         title: "Ofertas q'encantan",
         body: "Del 1 al 5 de octubre.",
@@ -62,7 +63,8 @@ async function main() {
         ctaText: "Ver sucursales",
         ctaLink: "/donde-estamos",
         ctaType: "OFFERS",
-        sortOrder: 0,
+        sortOrder: 1,
+        active: false,
       },
       {
         tag: "Trasnochón",
@@ -112,28 +114,12 @@ async function main() {
   });
 
   await prisma.separataItem.createMany({
-    data: [
-      { title: "Aseo y cuidado", link: "/donde-estamos", imageUrl: "/images/separata/ofertas-01.jpg", sortOrder: 1 },
-      { title: "Huevos, lácteos y bebidas", link: "/donde-estamos", imageUrl: "/images/separata/ofertas-02.jpg", sortOrder: 2 },
-      { title: "Arequipe, quesos y yogurt", link: "/donde-estamos", imageUrl: "/images/separata/ofertas-03.jpg", sortOrder: 3 },
-      { title: "Lácteos y despensa", link: "/donde-estamos", imageUrl: "/images/separata/ofertas-04.jpg", sortOrder: 4 },
-      { title: "Arroces", link: "/donde-estamos", imageUrl: "/images/separata/ofertas-05.jpg", sortOrder: 5 },
-      { title: "Carnes de cerdo", link: "/donde-estamos", imageUrl: "/images/separata/ofertas-06.jpg", sortOrder: 6 },
-      { title: "Cereales, café y pan", link: "/donde-estamos", imageUrl: "/images/separata/ofertas-07.jpg", sortOrder: 7 },
-      { title: "Papel, galletas y snacks", link: "/donde-estamos", imageUrl: "/images/separata/ofertas-08.jpg", sortOrder: 8 },
-      { title: "Despensa", link: "/donde-estamos", imageUrl: "/images/separata/ofertas-09.jpg", sortOrder: 9 },
-      { title: "Aseo del hogar", link: "/donde-estamos", imageUrl: "/images/separata/ofertas-10.jpg", sortOrder: 10 },
-      { title: "Cuidado personal", link: "/donde-estamos", imageUrl: "/images/separata/ofertas-11.jpg", sortOrder: 11 },
-      { title: "Licorera de Caldas", link: "/donde-estamos", imageUrl: "/images/separata/ofertas-12.jpg", sortOrder: 12 },
-      { title: "Fruver", link: "/donde-estamos", imageUrl: "/images/separata/ofertas-13.jpg", sortOrder: 13 },
-      { title: "Salsas y arepas", link: "/donde-estamos", imageUrl: "/images/separata/ofertas-14.jpg", sortOrder: 14 },
-      { title: "Pollo", link: "/donde-estamos", imageUrl: "/images/separata/ofertas-15.jpg", sortOrder: 15 },
-      { title: "Embutidos y congelados", link: "/donde-estamos", imageUrl: "/images/separata/ofertas-16.jpg", sortOrder: 16 },
-      { title: "Yogures y cárnicos", link: "/donde-estamos", imageUrl: "/images/separata/ofertas-17.jpg", sortOrder: 17 },
-      { title: "Aceites y margarinas", link: "/donde-estamos", imageUrl: "/images/separata/ofertas-18.jpg", sortOrder: 18 },
-      { title: "Higiene y aseo", link: "/donde-estamos", imageUrl: "/images/separata/ofertas-19.jpg", sortOrder: 19 },
-      { title: "Pastas y despensa", link: "/donde-estamos", imageUrl: "/images/separata/ofertas-20.jpg", sortOrder: 20 },
-    ],
+    data: ofertas.map(([title, imageUrl], index) => ({
+      title,
+      link: "/donde-estamos",
+      imageUrl,
+      sortOrder: index + 1,
+    })),
   });
 
   await prisma.store.createMany({

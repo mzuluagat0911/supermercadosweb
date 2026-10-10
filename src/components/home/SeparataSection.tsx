@@ -48,8 +48,8 @@ export function SeparataSection({ items }: SeparataSectionProps) {
           <SectionHeading
             align="left"
             eyebrow="Separata"
-            title="Ofertas q'encantan"
-            description="Del 1 al 5 de octubre. Pasa las páginas como en el periódico de ofertas."
+            title="En octubre, déjate encantar"
+            description="Del 9 al 12 de octubre. Pasa las páginas como en el periódico de ofertas."
           />
           <Link
             href="/donde-estamos"
@@ -100,7 +100,7 @@ export function SeparataSection({ items }: SeparataSectionProps) {
                     fill
                     priority={current < 2}
                     sizes="(max-width: 768px) 92vw, 440px"
-                    className="object-cover"
+                    className="object-contain"
                   />
                 </span>
                 <span className="absolute bottom-4 left-1/2 inline-flex -translate-x-1/2 items-center gap-2 rounded-full bg-white/95 px-4 py-2 text-sm font-semibold text-foreground opacity-0 shadow-lg transition group-hover:opacity-100">
