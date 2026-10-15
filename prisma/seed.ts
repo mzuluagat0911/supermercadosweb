@@ -19,25 +19,29 @@ async function main() {
   await prisma.adminUser.deleteMany();
 
   const ofertas = [
-    ["Déjate encantar", "/images/separata/octubre-01.jpg"],
-    ["Leche y aceites", "/images/separata/octubre-02.jpg"],
-    ["Aseo del hogar", "/images/separata/octubre-03.jpg"],
-    ["Atún", "/images/separata/octubre-04.jpg"],
-    ["Whiskies", "/images/separata/octubre-05.jpg"],
-    ["Licorera de Caldas", "/images/separata/octubre-06.jpg"],
-    ["Quesitos Colanta", "/images/separata/octubre-07.jpg"],
-    ["Quesos Colanta", "/images/separata/octubre-08.jpg"],
-    ["Pollo", "/images/separata/octubre-09.jpg"],
-    ["Cerdo", "/images/separata/octubre-10.jpg"],
-    ["Fruver", "/images/separata/octubre-11.jpg"],
+    ["Despensa y aseo", "/images/separata/quincena-01.jpg"],
+    ["Aseo Sannox", "/images/separata/quincena-02.jpg"],
+    ["Quesitos Colanta", "/images/separata/quincena-03.jpg"],
+    ["Quesos Colanta", "/images/separata/quincena-04.jpg"],
+    ["Atún Van Camps", "/images/separata/quincena-05.jpg"],
+    ["Suavitel y Axion", "/images/separata/quincena-06.jpg"],
+    ["Cárnicos y lácteos", "/images/separata/quincena-07.jpg"],
+    ["Cuidado personal", "/images/separata/quincena-08.jpg"],
+    ["Tequila Don Julio", "/images/separata/quincena-09.jpg"],
+    ["Whisky Buchanan's", "/images/separata/quincena-10.jpg"],
+    ["Whisky Old Parr", "/images/separata/quincena-11.jpg"],
+    ["Licorera de Caldas", "/images/separata/quincena-12.jpg"],
+    ["Pollo", "/images/separata/quincena-13.jpg"],
+    ["Cerdo", "/images/separata/quincena-14.jpg"],
+    ["Fruver", "/images/separata/quincena-15.jpg"],
   ] as const;
 
   await prisma.banner.createMany({
     data: [
       ...ofertas.map(([title, imageUrl], index) => ({
-        tag: "Déjate encantar",
+        tag: "Quincenazo de locura",
         title,
-        body: "Del 9 al 12 de octubre.",
+        body: "Del 15 al 20 de octubre.",
         imageUrl,
         ctaText: "Ver sucursales",
         ctaLink: "/donde-estamos",

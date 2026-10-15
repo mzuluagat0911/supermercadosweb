@@ -82,8 +82,8 @@ export function SeparataSection({ items }: SeparataSectionProps) {
           <SectionHeading
             align="left"
             eyebrow="Separata"
-            title="En octubre, déjate encantar"
-            description="Del 9 al 12 de octubre. Pasa las páginas como en el periódico de ofertas."
+            title="Quincenazo de locura"
+            description="Del 15 al 20 de octubre. Pasa las páginas como en el periódico de ofertas."
           />
           <Link
             href="/donde-estamos"
