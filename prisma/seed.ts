@@ -50,6 +50,16 @@ async function main() {
         active: false,
       })),
       {
+        tag: "Quincenazo de locura",
+        title: "Quincenazo de locura",
+        body: "Del 15 al 20 de octubre.",
+        imageUrl: "/images/banners/quincenazo-locura.jpg",
+        ctaText: "Ver sucursales",
+        ctaLink: "/donde-estamos",
+        ctaType: "OFFERS",
+        sortOrder: 0,
+      },
+      {
         tag: "Déjate encantar",
         title: "En octubre, déjate encantar",
         body: "Del 9 al 12 de octubre.",
@@ -57,7 +67,8 @@ async function main() {
         ctaText: "Ver sucursales",
         ctaLink: "/donde-estamos",
         ctaType: "OFFERS",
-        sortOrder: 0,
+        sortOrder: 1,
+        active: false,
       },
       {
         tag: "Ofertas q'encantan",
