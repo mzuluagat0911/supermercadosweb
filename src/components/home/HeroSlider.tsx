@@ -37,6 +37,7 @@ export function HeroSlider({ banners }: HeroSliderProps) {
   const isCover = banner.imageUrl.includes("/banners/dejate-encantar");
   const isPortrait = isCover || banner.imageUrl.includes("/images/separata/");
   const isQuincenazo = banner.imageUrl.includes("quincenazo-locura");
+  const isTrasnochon = banner.imageUrl.includes("gran-trasnochon-30-octubre");
 
   return (
     <section className="relative overflow-hidden">
@@ -58,8 +59,8 @@ export function HeroSlider({ banners }: HeroSliderProps) {
           <Image
             src={banner.imageUrl}
             alt={banner.title}
-            width={isQuincenazo ? 1600 : 3840}
-            height={isQuincenazo ? 404 : 1200}
+            width={isQuincenazo || isTrasnochon ? 1600 : 3840}
+            height={isQuincenazo ? 404 : isTrasnochon ? 500 : 1200}
             quality={90}
             priority
             sizes="100vw"

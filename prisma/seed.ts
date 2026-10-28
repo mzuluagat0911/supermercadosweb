@@ -19,29 +19,18 @@ async function main() {
   await prisma.adminUser.deleteMany();
 
   const ofertas = [
-    ["Despensa y aseo", "/images/separata/quincena-01.jpg"],
-    ["Aseo Sannox", "/images/separata/quincena-02.jpg"],
-    ["Quesitos Colanta", "/images/separata/quincena-03.jpg"],
-    ["Quesos Colanta", "/images/separata/quincena-04.jpg"],
-    ["Atún Van Camps", "/images/separata/quincena-05.jpg"],
-    ["Suavitel y Axion", "/images/separata/quincena-06.jpg"],
-    ["Cárnicos y lácteos", "/images/separata/quincena-07.jpg"],
-    ["Cuidado personal", "/images/separata/quincena-08.jpg"],
-    ["Tequila Don Julio", "/images/separata/quincena-09.jpg"],
-    ["Whisky Buchanan's", "/images/separata/quincena-10.jpg"],
-    ["Whisky Old Parr", "/images/separata/quincena-11.jpg"],
-    ["Licorera de Caldas", "/images/separata/quincena-12.jpg"],
-    ["Pollo", "/images/separata/quincena-13.jpg"],
-    ["Cerdo", "/images/separata/quincena-14.jpg"],
-    ["Fruver", "/images/separata/quincena-15.jpg"],
+    ["¡No te lo pierdas!", "/images/separata/trasnochon-oct-01.jpg"],
+    ["Te esperamos", "/images/separata/trasnochon-oct-02.jpg"],
+    ["Categorías para ahorrar", "/images/separata/trasnochon-oct-03.jpg"],
+    ["Planea tu noche de ahorro", "/images/separata/trasnochon-oct-04.jpg"],
   ] as const;
 
   await prisma.banner.createMany({
     data: [
       ...ofertas.map(([title, imageUrl], index) => ({
-        tag: "Quincenazo de locura",
+        tag: "Gran Trasnochón",
         title,
-        body: "Del 15 al 20 de octubre.",
+        body: "Viernes 30 de octubre, desde las 4:00 p.m.",
         imageUrl,
         ctaText: "Ver sucursales",
         ctaLink: "/donde-estamos",
@@ -50,6 +39,16 @@ async function main() {
         active: false,
       })),
       {
+        tag: "Gran Trasnochón",
+        title: "Gran Trasnochón",
+        body: "Viernes 30 de octubre, desde las 4:00 p.m. hasta el cierre del supermercado.",
+        imageUrl: "/images/banners/gran-trasnochon-30-octubre.jpg",
+        ctaText: "Ver sucursales",
+        ctaLink: "/donde-estamos",
+        ctaType: "OFFERS",
+        sortOrder: 0,
+      },
+      {
         tag: "Quincenazo de locura",
         title: "Quincenazo de locura",
         body: "Del 15 al 20 de octubre.",
@@ -57,7 +56,8 @@ async function main() {
         ctaText: "Ver sucursales",
         ctaLink: "/donde-estamos",
         ctaType: "OFFERS",
-        sortOrder: 0,
+        sortOrder: 1,
+        active: false,
       },
       {
         tag: "Déjate encantar",

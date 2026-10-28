@@ -82,8 +82,8 @@ export function SeparataSection({ items }: SeparataSectionProps) {
           <SectionHeading
             align="left"
             eyebrow="Separata"
-            title="Quincenazo de locura"
-            description="Del 15 al 20 de octubre. Pasa las páginas como en el periódico de ofertas."
+            title="Gran Trasnochón"
+            description="Viernes 30 de octubre, desde las 4:00 p.m. hasta el cierre. Pasa las páginas como en el periódico de ofertas."
           />
           <Link
             href="/donde-estamos"
