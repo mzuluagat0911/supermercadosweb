@@ -1,4 +1,5 @@
 import { HrForm } from "@/components/rrhh/HrForm";
+import { JobOpenings } from "@/components/rrhh/JobOpenings";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { prisma } from "@/lib/prisma";
 
@@ -26,6 +27,18 @@ export default async function RrhhPage() {
       </section>
 
       <section className="section-container py-16">
+        <SectionHeading
+          align="left"
+          eyebrow="Vacantes abiertas"
+          title="¡Únete a nuestro equipo!"
+          description="Postúlate por WhatsApp al 316 301 0885 o envía tu hoja de vida a gestion.elahorro@gmail.com."
+        />
+        <div className="mt-10">
+          <JobOpenings />
+        </div>
+      </section>
+
+      <section className="section-container pb-16">
         <div className="mx-auto max-w-3xl">
           <HrForm areas={areas} />
         </div>

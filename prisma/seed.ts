@@ -232,12 +232,14 @@ async function main() {
 
   await prisma.hrArea.createMany({
     data: [
-      { name: "Cajas y atención al cliente", sortOrder: 1 },
-      { name: "Bodega y logística", sortOrder: 2 },
-      { name: "Administración", sortOrder: 3 },
-      { name: "Mercadeo", sortOrder: 4 },
-      { name: "Recursos humanos", sortOrder: 5 },
-      { name: "Otra área", sortOrder: 6 },
+      { name: "Auxiliar de carnes (El Ahorro)", sortOrder: 1 },
+      { name: "Auxiliar de bodega (Del Centro)", sortOrder: 2 },
+      { name: "Cajas y atención al cliente", sortOrder: 3 },
+      { name: "Bodega y logística", sortOrder: 4 },
+      { name: "Administración", sortOrder: 5 },
+      { name: "Mercadeo", sortOrder: 6 },
+      { name: "Recursos humanos", sortOrder: 7 },
+      { name: "Otra área", sortOrder: 8 },
     ],
   });
 
