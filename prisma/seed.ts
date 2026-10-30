@@ -19,10 +19,29 @@ async function main() {
   await prisma.adminUser.deleteMany();
 
   const ofertas = [
-    ["¡No te lo pierdas!", "/images/separata/trasnochon-oct-01.jpg"],
-    ["Te esperamos", "/images/separata/trasnochon-oct-02.jpg"],
-    ["Categorías para ahorrar", "/images/separata/trasnochon-oct-03.jpg"],
-    ["Planea tu noche de ahorro", "/images/separata/trasnochon-oct-04.jpg"],
+    ["Cerdo", "/images/separata/trasnochon-30oct-01.jpg"],
+    ["Pollo", "/images/separata/trasnochon-30oct-02.jpg"],
+    ["20% en frutas y verduras", "/images/separata/trasnochon-30oct-03.jpg"],
+    ["Aceites, margarinas y huevos", "/images/separata/trasnochon-30oct-04.jpg"],
+    ["Arroz", "/images/separata/trasnochon-30oct-05.jpg"],
+    ["Atún Van Camp's", "/images/separata/trasnochon-30oct-06.jpg"],
+    ["Café, pastas y tortillas", "/images/separata/trasnochon-30oct-07.jpg"],
+    ["Pastas, salsas y limpieza", "/images/separata/trasnochon-30oct-08.jpg"],
+    ["Chocolates, galletas y loncheras", "/images/separata/trasnochon-30oct-09.jpg"],
+    ["Lácteos Alquería", "/images/separata/trasnochon-30oct-10.jpg"],
+    ["Carnes frías, quesos y leche", "/images/separata/trasnochon-30oct-11.jpg"],
+    ["Colanta", "/images/separata/trasnochon-30oct-12.jpg"],
+    ["Pañitos, panadería y más", "/images/separata/trasnochon-30oct-13.jpg"],
+    ["Cereales, gelatinas y cuidado personal", "/images/separata/trasnochon-30oct-14.jpg"],
+    ["Lavaplatos y suavizantes", "/images/separata/trasnochon-30oct-15.jpg"],
+    ["Cuidado oral, Kotex y detergentes", "/images/separata/trasnochon-30oct-16.jpg"],
+    ["Shampoo y despensa", "/images/separata/trasnochon-30oct-17.jpg"],
+    ["Nosotras y Familia", "/images/separata/trasnochon-30oct-18.jpg"],
+    ["Dulces de Halloween", "/images/separata/trasnochon-30oct-19.jpg"],
+    ["10% Licorera de Caldas", "/images/separata/trasnochon-30oct-20.jpg"],
+    ["Tequila Don Julio Blanco", "/images/separata/trasnochon-30oct-21.jpg"],
+    ["Whisky Old Parr 12 años", "/images/separata/trasnochon-30oct-22.jpg"],
+    ["Tequila Jose Cuervo Especial", "/images/separata/trasnochon-30oct-23.jpg"],
   ] as const;
 
   await prisma.banner.createMany({
